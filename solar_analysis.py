@@ -11,19 +11,59 @@ analysed_solar_data = pd.DataFrame(columns=[
     'Total Purchased', 
     'Total Feed-in', 
     'Total Load',
+    'Total Consumption',
     # Cost Calculation
     'Total Cost',
     'Original Cost',
     'Total Saving',
-    #Average Daily Elements
-    'Average Daily Cost',
-    'Average Daily Saving',
-    'Average Daily Production',
-    'Average Daily Solar Consumption',
-    'Average Daily Feed-in',
-    'Average Daily Total Load'
 ])
-
+solar_data_production_data = pd.DataFrame(columns=[
+    'Month', 
+    'Num of Day', 
+    'Total Production', 
+    'Average Daily Production',
+    'Median Daily Production',
+    'Max Daily Production',
+    'Min Daily Production'
+])
+solar_data_purchase_data = pd.DataFrame(columns=[
+    'Month', 
+    'Num of Day', 
+    'Total Purchased', 
+    'Average Daily Purchased',
+    'Median Daily Purchased',
+    'Max Daily Purchased',
+    'Min Daily Purchased'
+])
+solar_data_feedin_data = pd.DataFrame(columns=[
+    'Month', 
+    'Num of Day', 
+    'Total Feed-in', 
+    'Average Daily Feed-in',
+    'Median Daily Feed-in',
+    'Max Daily Feed-in',
+    'Min Daily Feed-in'
+])
+solar_data_load_data = pd.DataFrame(columns=[
+    'Month', 
+    'Num of Day', 
+    'Total Load', 
+    'Average Daily Load',
+    'Median Daily Load',
+    'Max Daily Load',
+    'Min Daily Load'
+])
+solar_data_consumption_data = pd.DataFrame(columns=[
+    'Month', 
+    'Num of Day', 
+    'Total Production', 
+    'Total Load', 
+    'Total Consumption', 
+    'Average Daily Consumption',
+    'Median Daily Consumption',
+    'Max Daily Consumption',
+    'Min Daily Consumption'
+])
 # Current Electricity Price
 daily_supply_charge = 0.9449
 per_kwh_charge = 0.2618
@@ -46,10 +86,7 @@ for month_data in entire_solar_data:
     total_saving = round(original_cost - total_cost, 1)
     average_daily_cost = round(total_cost / day_num, 1)
     average_daily_saving = round(total_saving / day_num, 1)
-    average_daily_production = round(total_solar_production / day_num, 1)
-    average_daily_solar_consumption = round(total_solar_consumption / day_num, 1)
-    average_daily_feed_in = round(total_feed_in / day_num, 1)
-    average_daily_total_load = round(total_load / day_num, 1)
+    
     analysed_solar_data.loc[len(analysed_solar_data)] = [
         month_label, 
         day_num, 
@@ -57,18 +94,111 @@ for month_data in entire_solar_data:
         total_purchased_energy, 
         total_feed_in, 
         total_load,
+        total_solar_consumption,
         total_cost,
         original_cost,
-        total_saving,
-        average_daily_cost,
-        average_daily_saving,
+        total_saving
+    ]
+
+    average_daily_production = round(total_solar_production / day_num, 1)
+    median_daily_production = df.iloc[:, 1].median()
+    max_daily_production = df.iloc[:, 1].max()
+    min_daily_production = df.iloc[:, 1].min()
+    solar_data_production_data.loc[len(solar_data_production_data)] = [
+        month_label, 
+        day_num, 
+        total_solar_production, 
         average_daily_production,
-        average_daily_solar_consumption,
+        median_daily_production,
+        max_daily_production,
+        min_daily_production
+    ]
+
+    average_daily_purchase= round(total_purchased_energy / day_num, 1)
+    median_daily_purchase = df.iloc[:, 2].median()
+    max_daily_purchase = df.iloc[:, 2].max()
+    min_daily_purchase = df.iloc[:, 2].min()
+    solar_data_purchase_data.loc[len(solar_data_purchase_data)] = [
+        month_label, 
+        day_num, 
+        total_purchased_energy, 
+        average_daily_purchase,
+        median_daily_purchase,
+        max_daily_purchase,
+        min_daily_purchase
+    ]
+
+    average_daily_feed_in = round(total_feed_in / day_num, 1)
+    median_daily_feedin = df.iloc[:, 3].median()
+    max_daily_feedin = df.iloc[:, 3].max()
+    min_daily_feedin = df.iloc[:, 3].min()
+    solar_data_feedin_data.loc[len(solar_data_feedin_data)] = [
+        month_label, 
+        day_num, 
+        total_feed_in, 
         average_daily_feed_in,
-        average_daily_total_load
+        median_daily_feedin,
+        max_daily_feedin,
+        min_daily_feedin
+    ]
+
+    average_daily_total_load = round(total_load / day_num, 1)
+    median_daily_load = df.iloc[:, 4].median()
+    max_daily_load = df.iloc[:, 4].max()
+    min_daily_load = df.iloc[:, 4].min()
+    solar_data_load_data.loc[len(solar_data_load_data)] = [
+        month_label, 
+        day_num, 
+        total_load, 
+        average_daily_total_load,
+        median_daily_load,
+        max_daily_load,
+        min_daily_load
+    ]
+
+    average_daily_solar_consumption = round(total_solar_consumption / day_num, 1)
+    median_daily_consumption = df.iloc[:, 4].median()
+    max_daily_consumption = df.iloc[:, 4].max()
+    min_daily_consumption = df.iloc[:, 4].min()
+    solar_data_consumption_data.loc[len(solar_data_consumption_data)] = [
+        month_label, 
+        day_num, 
+        total_solar_production,
+        total_load, 
+        total_solar_consumption,
+        average_daily_solar_consumption,
+        median_daily_consumption,
+        max_daily_consumption,
+        min_daily_consumption
     ]
 
 analysed_solar_data_sorted = analysed_solar_data.sort_values(by=analysed_solar_data.columns[0], ascending=True).reset_index(drop=True)
+solar_data_production_data_sorted = solar_data_production_data.sort_values(by=solar_data_production_data.columns[0], ascending=True).reset_index(drop=True)
+solar_data_purchase_data_sorted = solar_data_purchase_data.sort_values(by=solar_data_purchase_data.columns[0], ascending=True).reset_index(drop=True)
+solar_data_feedin_data_sorted = solar_data_feedin_data.sort_values(by=solar_data_feedin_data.columns[0], ascending=True).reset_index(drop=True)
+solar_data_load_data_sorted = solar_data_load_data.sort_values(by=solar_data_load_data.columns[0], ascending=True).reset_index(drop=True)
+solar_data_consumption_data_sorted = solar_data_consumption_data.sort_values(by=solar_data_consumption_data.columns[0], ascending=True).reset_index(drop=True)
 pd.set_option('display.colheader_justify', 'left')
-table_to_print = analysed_solar_data_sorted.to_string(formatters={analysed_solar_data_sorted.columns[0]: '{:<15}'.format})
-print(table_to_print)
+table1_to_print = analysed_solar_data_sorted.to_string(formatters={analysed_solar_data_sorted.columns[0]: '{:<15}'.format})
+table2_to_print = solar_data_production_data_sorted.to_string(formatters={solar_data_production_data_sorted.columns[0]: '{:<15}'.format})
+table3_to_print = solar_data_purchase_data_sorted.to_string(formatters={solar_data_purchase_data_sorted.columns[0]: '{:<15}'.format})
+table4_to_print = solar_data_feedin_data_sorted.to_string(formatters={solar_data_feedin_data_sorted.columns[0]: '{:<15}'.format})
+table5_to_print = solar_data_load_data_sorted.to_string(formatters={solar_data_load_data_sorted.columns[0]: '{:<15}'.format})
+table6_to_print = solar_data_consumption_data_sorted.to_string(formatters={solar_data_consumption_data_sorted.columns[0]: '{:<15}'.format})
+print('Overall Essential Data')
+print(table1_to_print)
+print()
+print('Daily Solar Production Analysis')
+print(table2_to_print)
+print()
+print('Daily Purchase kwh Analysis')
+print(table3_to_print)
+print()
+print('Daily Solar Feed-in Analysis')
+print(table4_to_print)
+print()
+print('Daily Load Analysis')
+print(table5_to_print)
+print()
+print('Daily Consumption Analysis')
+print(table6_to_print)
