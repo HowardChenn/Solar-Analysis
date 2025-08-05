@@ -3,6 +3,7 @@ import pandas as pd
 from datetime import datetime
 
 entire_solar_data = glob.glob('solar_data/*.csv')
+print(entire_solar_data)
 analysed_solar_data = pd.DataFrame(columns=[
     'Month', 
     'Num of Day', 
