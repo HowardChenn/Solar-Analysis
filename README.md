@@ -27,3 +27,8 @@ below attributes are investigated
 
 Phase 2 
 Visualisation 
+
+
+
+24/2/2026 
+attempt to gather data using Sungrow api directly
