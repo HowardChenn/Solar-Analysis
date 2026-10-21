@@ -1,6 +1,10 @@
 # Solar-Analysis
 Solar Analysis on my solar setup at home
 
+## Current project direction
+
+See [PROJECT_GOALS.md](PROJECT_GOALS.md) for the local Fox ESS dashboard goal, proposed architecture, milestones, and open questions. Use it as the ongoing reference as the project develops.
+
 This is a repo for solar data analysis for my 6.6kw panel 5kw inverter.
 The objective is to have a better understanding of how the panels are working and make more informed decision on energy consumption.
 
